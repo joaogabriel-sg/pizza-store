@@ -1,0 +1,38 @@
+.cart-view-container {
+  display: none;
+  justify-content: flex-end;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background: #e74c3c; 
+  width: 100%;
+  padding: 2rem;
+  @include box-shadow(0 0.5rem 1rem rgba(0, 0, 0, 0.15), 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1));
+  @include device(tablet) {
+    display: flex;
+  }
+
+  .cart-view-content {
+    background: #ff5e57;
+    padding: 0.5rem 1rem;
+    @include border-radius();
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    &:hover i {
+      animation: animate-cart-view 0.5s linear infinite alternate;
+    }
+
+    span, 
+    i {
+      font-size: 2rem;
+      color: #edf2f4;
+    }
+
+    span {
+      margin-right: 1rem;
+      font-weight: 700;
+    }
+  }
+}

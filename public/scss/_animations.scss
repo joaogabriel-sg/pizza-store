@@ -1,0 +1,17 @@
+@keyframes animate-cart-view {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-0.5rem);
+  }
+}
+
+@keyframes animate-arrow-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-0.5rem);
+  }
+}

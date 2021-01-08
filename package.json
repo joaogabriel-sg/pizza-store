@@ -1,0 +1,22 @@
+{
+  "name": "pizza-store",
+  "version": "1.0.0",
+  "description": "",
+  "main": "pizzas.js",
+  "scripts": {
+    "test": "Hello world, my name is João Gabriel!"
+  },
+  "keywords": [],
+  "author": "João Gabriel",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.26.13",
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^4.1.0",
+    "node-sass": "^5.0.0"
+  }
+}

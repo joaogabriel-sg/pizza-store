@@ -1,0 +1,35 @@
+$tablet-size: 768px;
+$mobile-size: 500px;
+
+@mixin device($size) {
+  @if $size == tablet {
+    @media screen and (max-width: #{$tablet-size}) {
+      @content;
+    }
+  }
+  @else if $size == mobile {
+    @media screen and (max-width: #{$mobile-size}) {
+      @content;
+    }
+  }
+}
+
+@mixin flex-xcenter-ycenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin box-shadow ($values...) {
+  box-shadow: $values;
+}
+
+@mixin border-radius($value: 0.5rem) {
+  border-radius: $value;
+}
+
+@mixin btn-configs() {
+  border: none;
+  outline: none;
+  cursor: pointer;
+}

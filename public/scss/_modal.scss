@@ -1,0 +1,248 @@
+.modal-container {
+  background: rgba(255, 255, 255, 0.5);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  padding: 0 1%;
+  @include flex-xcenter-ycenter;
+  display: none;
+  &.active  {
+    display: flex;
+  }
+  @include device(tablet) {
+    padding: 0;
+  }
+}
+
+.modal {
+  background: #edf2f4;
+  width: 100%;
+  max-width: 75rem;
+  padding: 3.2rem;
+  @include border-radius(1rem);
+  display: flex;
+  @include box-shadow(0 1rem 3rem rgba(0, 0, 0, 0.2));
+  @include device(tablet) {
+    height: 100%;
+    padding: 3.2rem 1%;
+    @include border-radius(0);
+    flex-direction: column;
+    align-items: center;
+    box-shadow: none;
+    overflow-y: auto;
+  }
+
+  .btn-close-modal {
+    display: none;
+    margin-bottom: 2rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+    &:hover i {
+      animation: animate-arrow-left 0.3s linear infinite alternate;
+    }
+    @include device(tablet) {
+      display: block;
+    }
+  }
+}
+
+.modal-image-container {
+  width: 30rem;
+  height: 30rem;
+  margin-right: 3.2rem;
+  @include device(tablet) {
+    width: 20rem;
+    height: 20rem;
+    margin-right: 0;
+  }
+
+  img {
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.modal-datas-container {
+  .modal-pizza-name {
+    margin-bottom: 0.5rem;
+    font-size: 4.2rem;
+    line-height: 1;
+    color: #121212;
+    @include device(tablet) {
+      margin-top: 2rem;
+      font-size: 3rem;
+    }
+  }
+  
+  .modal-pizza-description {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #757f80;
+    @include device(tablet) {
+      font-size: 1.2rem;
+    }
+  }
+  
+  .modal-subtitle {
+    margin: 2rem 0 0.5rem;
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    letter-spacing: 0.1rem;
+    color: #969191;
+  }
+}
+
+.modal-size-container {
+  display: flex;
+
+  .modal-pizza-size {
+    background: #e4e4e4;
+    padding: 0.7rem 1.4rem;
+    border: none;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+    color: #121212;
+    &.active {
+      background: #3498db;
+      color: #edf2f4;
+      
+      span {
+        color: #e2e2e2;
+      }
+    }
+    &:hover {
+      background: #bdc3c7;
+    }
+    &:nth-child(1) {
+      border-top-left-radius: 0.5rem;
+      border-bottom-left-radius: 0.5rem;
+    }
+    &:nth-child(3) {
+      border-top-right-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+    }
+    @include device(tablet) {
+      text-align: left;
+    }
+  
+    span {
+      text-transform: lowercase;
+      font-weight: 700;
+      color: #969191;
+      @include device(tablet) {
+        display: block;
+      }
+    }
+  }
+}
+
+.modal-price-quantity-container {
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  @include device(tablet) {
+    justify-content: space-between;
+  }
+
+  .modal-pizza-price {
+    margin-right: 3rem;
+    font-size: 2.8rem;
+    font-weight: 600;
+    color: #121212;
+    @include device(tablet) {
+      margin-right: 0;
+    }
+  }
+
+  .modal-quantity-container {
+    display: flex;
+    align-items: center;
+    
+    button,
+    span {
+      background: #e4e4e4;
+      width: 2.4rem;
+      height: 2.4rem;
+      @include flex-xcenter-ycenter;
+    }
+  
+    button {
+      @include btn-configs();
+      transition: background 0.3s, transform 0.3s;
+      &:hover {
+        background: #bdc3c7;
+      }
+      &:nth-of-type(1) {
+        border-top-left-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem;
+      }
+      &:nth-of-type(2) {
+        border-top-right-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+      }
+  
+      i {
+        font-size: 0.8rem;
+        color: #121212;
+      }
+    }
+  
+    span {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #121212;
+    }
+  }
+}
+
+.modal-buttons-container {
+  display: flex;
+  @include device(tablet) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  button {
+    @include btn-configs();
+  }
+
+  .modal-btn-add-to-cart {
+    background: #27ae60;
+    width: 20rem;
+    height: 3.5rem;
+    @include border-radius();
+    margin-right: 4rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #edf2f4;
+    transition: background 0.3s, transform 0.3s;
+    &:hover {
+      background: #2ecc71;
+    }
+    &:active {
+      transform: scale(0.95);
+    }
+    @include device(tablet) {
+      height: 5rem;
+      margin: 0 0 2rem;
+      font-size: 1.6rem;
+    }
+  }
+  
+  .modal-btn-cancel {
+    background: transparent;
+    font-size: 1.4rem;
+    color: #121212;
+    transition: color 0.3s;
+    &:hover {
+      color: #c0392b;
+    }
+  }
+}
