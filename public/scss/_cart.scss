@@ -15,12 +15,30 @@
     right: 0;
     z-index: 200;
     width: 100%;
+    overflow-y: scroll;
   }
 
   &.active {
     margin-right: 0;
     @include device(tablet) {
       display: block;
+    }
+  }
+
+  .btn-close-cart {
+    background: transparent;
+    display: none;
+    margin-bottom: 2rem;
+    justify-content: flex-end;
+    @include btn-configs;
+    cursor: auto;
+    color: #e4e4e4;
+    i {
+      font-size: 2rem;
+      cursor: pointer;
+    }
+    @include device(tablet) {
+      display: flex;
     }
   }
 
@@ -82,7 +100,8 @@
   }
 
   .cart-subtotal,
-  .cart-discount {
+  .cart-discount,
+  .cart-total {
     display: flex;
     justify-content: space-between;
     padding: 1.6rem 0;
@@ -92,6 +111,15 @@
     span {
       font-weight: 400;
       font-size: 1.4rem;
+    }
+  }
+
+  .cart-total {
+    text-transform: uppercase;
+    font-size: 2.4rem;
+
+    span {
+      font-size: 2rem;
     }
   }
 

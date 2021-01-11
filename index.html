@@ -9,127 +9,31 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
   <link rel="stylesheet" href="./public/css/style.css">
 </head>
-<body class="">
+<body>
   <div id="page-pizzas">
     <div class="cart-view-container">
       <div class="cart-view-content">
-        <span class="number-of-items">3</span>
+        <span class="number-of-items">0</span>
         <i class="fas fa-shopping-cart"></i>
       </div>
     </div>
 
     <div class="container">
       <h1 class="page-title">Pizzas</h1>
-      <div class="pizzas-container">
-        <div class="pizza">
-          <div class="pizza-image-container">
-            <img src="./public/images/pizza1.png" alt="Mussarela" class="pizza-image">
-          </div>
-          <button class="btn-add-pizza"><i class="fas fa-plus"></i></button>
-          <h3 class="pizza-price">R$ 30,00</h3>
-          <h2 class="pizza-name">Mussarela</h2>
-          <p class="pizza-description">A melhor pizza de Mussarela da região</p>
-        </div>
-        <div class="pizza">
-          <div class="pizza-image-container">
-            <img src="./public/images/pizza2.png" alt="Mussarela" class="pizza-image">
-          </div>
-          <button class="btn-add-pizza"><i class="fas fa-plus"></i></button>
-          <h3 class="pizza-price">R$ 31,00</h3>
-          <h2 class="pizza-name">Calabresa</h2>
-          <p class="pizza-description">A melhor pizza de Calabresa da região</p>
-        </div>
-        <div class="pizza">
-          <div class="pizza-image-container">
-            <img src="./public/images/pizza3.png" alt="Mussarela" class="pizza-image">
-          </div>
-          <button class="btn-add-pizza"><i class="fas fa-plus"></i></button>
-          <h3 class="pizza-price">R$ 40,00</h3>
-          <h2 class="pizza-name">Quatro Queijos</h2>
-          <p class="pizza-description">A melhor pizza de Quatro Queijos da região</p>
-        </div>
-        <div class="pizza">
-          <div class="pizza-image-container">
-            <img src="./public/images/pizza4.png" alt="Mussarela" class="pizza-image">
-          </div>
-          <button class="btn-add-pizza"><i class="fas fa-plus"></i></button>
-          <h3 class="pizza-price">R$ 29,00</h3>
-          <h2 class="pizza-name">Americana</h2>
-          <p class="pizza-description">A melhor pizza de Americana da região</p>
-        </div>
-      </div>
-    </div>
-  
-    <div class="cart-container">
-      <h1>Suas Pizzas</h1>
-      <div class="cart-list">
-        <div class="cart-item">
-          <div class="item-pizza-info-container">
-            <img class="item-image" src="./public/images/pizza2.png" alt="">
-            <h3 class="item-name">Calabresa (G)</h3>
-          </div>
-          <div class="item-quantity-container">
-            <button class="quantity-minus">
-                <i class="fas fa-minus"></i>
-            </button>
-            <span class="item-quantity">3</span>
-            <button class="quantity-plus">
-                <i class="fas fa-plus"></i>
-            </button>
-          </div>
-        </div>
-        <div class="cart-item">
-          <div class="item-pizza-info-container">
-            <img class="item-image" src="./public/images/pizza3.png" alt="">
-            <h3 class="item-name">Quatro Queijos (M)</h3>
-          </div>
-          <div class="item-quantity-container">
-            <button class="quantity-minus">
-                <i class="fas fa-minus"></i>
-            </button>
-            <span class="item-quantity">2</span>
-            <button class="quantity-plus">
-                <i class="fas fa-plus"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <h2 class="cart-subtotal">Subtotal <span>R$ 173,00</span></h2>
-      <h2 class="cart-discount">Desconto (-10%) <span>R$ 17,30</span></h2>
-      <h2 class="cart-subtotal">Total <span>R$ 155,70</span></h2>
-      <button class="btn-finish">Finalizar a compra</button>
+      <div class="pizzas-container"></div>
     </div>
 
-    <div class="modal-container">
-      <div class="modal">
-        <span class="btn-close-modal"><i class="fas fa-arrow-left"></i> Voltar</span>
-        <div class="modal-image-container">
-          <img src="./public/images/pizza1.png" alt="" class="modal-pizza-image">
-        </div>
-        <div class="modal-datas-container">
-          <h1 class="modal-pizza-name">Quatro Queijos</h1>
-          <h2 class="modal-pizza-description">A melhor pizza de Mussarela da região</h2>
-          <h3 class="modal-subtitle">Tamanho</h3>
-          <div class="modal-size-container">
-            <button class="modal-pizza-size">Pequena <span>100g</span></button>
-            <button class="modal-pizza-size">Média <span>530g</span></button>
-            <button class="modal-pizza-size active">Grande <span>860g</span></button>
-          </div>
-          <h3 class="modal-subtitle">Preço</h3>
-          <div class="modal-price-quantity-container">
-            <h4 class="modal-pizza-price">R$ 40,00</h4>
-            <div class="modal-quantity-container">
-              <button class="modal-btn-minus"><i class="fas fa-minus"></i></button>
-              <span class="modal-quantity">1</span>
-              <button class="modal-btn-plus"><i class="fas fa-plus"></i></button>
-            </div>
-          </div>
-          <div class="modal-buttons-container">
-            <button class="modal-btn-add-to-cart">Adicionar ao carrinho</button>
-            <button class="modal-btn-cancel">Cancelar</button>
-          </div>
-        </div>
+    <div class="cart-container">
+      <div class="btn-close-cart">
+        <i class="fas fa-times"></i>
       </div>
+      <h1>Suas Pizzas</h1>
+      <div class="cart-list"></div>
+
+      <h2 class="cart-subtotal">Subtotal <span>R$ 0,00</span></h2>
+      <h2 class="cart-discount">Desconto (-10%) <span>R$ 0,00</span></h2>
+      <h2 class="cart-total">Total <span>R$ 0,00</span></h2>
+      <button class="btn-finish">Finalizar a compra</button>
     </div>
   </div>
   <script src="./public/scripts/script.js"></script>
