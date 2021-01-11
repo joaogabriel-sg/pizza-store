@@ -46,44 +46,41 @@ function removeNoScrollBodyClass() {
   document.body.classList.remove('no-scroll');
 }
 
-async function updateCartViewMobileEventAndNumberOfItems() {
-  const pizzasCart = await getCartItemsOnLocalStorage();
+function updateCartViewMobileEventAndNumberOfItems() {
+  const pizzasCart = getCartItemsOnLocalStorage();
   const pizzaCartViewQuantity = pizzasCart.reduce((acc, { quantity }) => {
     acc += Number(quantity);
     return acc;
   }, 0);
 
-  const cartViewContentNumber = document.querySelector('.cart-view-content .number-of-items');
-  cartViewContentNumber.textContent = pizzaCartViewQuantity;
-
   const cartViewContent = document.querySelector('.cart-view-content');
   cartViewContent.addEventListener('click', openCart);
+
+  const cartViewContentNumber = document.querySelector('.cart-view-content .number-of-items');
+  cartViewContentNumber.textContent = pizzaCartViewQuantity;
 }
 
 function updateCart() {
   const pizzasCart = getCartItemsOnLocalStorage();
-
   if (pizzasCart.length === 0) {
     removeNoScrollBodyClass();
     const cartContainer = document.querySelector('.cart-container');
     cartContainer.classList.remove('active');
   }
 
-  const cartSubtotal = document.querySelector('.cart-subtotal span');
   const subtotal = pizzasCart.reduce((acc, { totalPrice }) => {
     acc += totalPrice;
     return acc;
   }, 0);
-
-  const cartDiscount = document.querySelector('.cart-discount span');
   const discount = subtotal * 0.1;
-
-  const cartTotal = document.querySelector('.cart-total span');
   const total = subtotal - discount;
 
-  cartSubtotal.textContent = likeCurrency.format(subtotal);
-  cartDiscount.textContent = likeCurrency.format(discount);
-  cartTotal.textContent = likeCurrency.format(total);
+  const cartSubtotalContainer = document.querySelector('.cart-subtotal span');
+  const cartDiscountContainer = document.querySelector('.cart-discount span');
+  const cartTotalContainer = document.querySelector('.cart-total span');
+  cartSubtotalContainer.textContent = likeCurrency.format(subtotal);
+  cartDiscountContainer.textContent = likeCurrency.format(discount);
+  cartTotalContainer.textContent = likeCurrency.format(total);
   updateCartViewMobileEventAndNumberOfItems();
 }
 
@@ -92,17 +89,16 @@ function minusItemQuantity(e) {
 
   const cartItem = e.currentTarget.parentNode.parentNode;
   const { dataset: { id: itemId, sizeDesc: itemDesc } } = cartItem;
-
   const cartItemQuantity = cartItem.querySelector('.item-quantity');
 
-  pizzasCart.forEach((pizzaItem, index) => {
-    if (Number(pizzaItem.id) === Number(itemId) && pizzaItem.desc === itemDesc) {
+  pizzasCart.forEach(({ id, desc }, index) => {
+    if (Number(id) === Number(itemId) && desc === itemDesc) {
       pizzasCart[index].quantity -= 1;
       cartItemQuantity.textContent = pizzasCart[index].quantity;
       pizzasCart[index].totalPrice = pizzasCart[index].quantity * pizzasCart[index].price;
 
       if (pizzasCart[index].quantity < 1) {
-        pizzasCart = pizzasCart.filter((pizzaLs, i) => i !== index);
+        pizzasCart = pizzasCart.filter((_, i) => i !== index);
         cartItem.remove();
       }
     }
@@ -114,17 +110,15 @@ function minusItemQuantity(e) {
 
 function addItemQuantity(e) {
   const pizzasCart = getCartItemsOnLocalStorage();
-
   const cartItem = e.currentTarget.parentNode.parentNode;
   const { dataset: { id: itemId, sizeDesc: itemDesc } } = cartItem;
-
   const cartItemQuantity = cartItem.querySelector('.item-quantity');
 
   pizzasCart.forEach((pizzaItem, index) => {
     if (Number(pizzaItem.id) === Number(itemId) && pizzaItem.desc === itemDesc) {
       pizzasCart[index].quantity += 1;
-      cartItemQuantity.textContent = pizzasCart[index].quantity;
       pizzasCart[index].totalPrice = pizzasCart[index].quantity * pizzasCart[index].price;
+      cartItemQuantity.textContent = pizzasCart[index].quantity;
       setCartItemsOnLocalStorage(pizzasCart);
     }
   });
@@ -177,16 +171,12 @@ function createCartItemTemplate(acc, item) {
 
 function openCart() {
   addCloseCartBtnEvent();
-
-  if (window.innerWidth <= 768) {
-    addNoScrollBodyClass();
-  }
-
-  const pizzasCart = getCartItemsOnLocalStorage();
+  if (window.innerWidth <= 768) addNoScrollBodyClass();
 
   const cartContainer = document.querySelector('.cart-container');
   cartContainer.classList.add('active');
 
+  const pizzasCart = getCartItemsOnLocalStorage();
   const cartList = document.querySelector('.cart-list');
   const cartItems = pizzasCart.reduce(createCartItemTemplate, '');
   cartList.innerHTML = cartItems;
@@ -195,7 +185,7 @@ function openCart() {
   updateCart();
 }
 
-function closeModal() {
+function closePizzaModal() {
   const modalContainer = document.querySelector('.modal-container');
   modalContainer.classList.remove('active');
   modalContainer.remove();
@@ -213,8 +203,10 @@ function createOrModifyPizzaItem(pizzasCart, itemIndex) {
   } = currentPizza;
   const { desc } = sizes[pizzaSizeId];
 
-  if (itemIndex !== -1) pizzasCart[itemIndex].quantity += pizzaQuantity;
-  else {
+  if (itemIndex !== -1) {
+    pizzasCart[itemIndex].quantity += pizzaQuantity;
+    pizzasCart[itemIndex].totalPrice = pizzasCart[itemIndex].quantity * pizzasCart[itemIndex].price;
+  } else {
     pizzasCart.push({
       id: pizzaId,
       name,
@@ -225,84 +217,83 @@ function createOrModifyPizzaItem(pizzasCart, itemIndex) {
       totalPrice: pizzaPrice * pizzaQuantity,
     });
   }
-
   return pizzasCart;
 }
 
-function verifyCart(pizzasCart) {
+function verifyIfCurrentPizzaExistsInCart(pizzasCart) {
   const { pizza: { sizes }, pizzaId, pizzaSizeId } = currentPizza;
   const { desc: pizzaDesc } = sizes[pizzaSizeId];
-
   return pizzasCart.findIndex(({ id: pizzaItemId, desc: pizzaItemDesc }) =>
     Number(pizzaItemId) === Number(pizzaId) && pizzaItemDesc === pizzaDesc);
 }
 
 function addToCart() {
   const pizzasCart = getCartItemsOnLocalStorage() || [];
-  const isThisItemExistent = verifyCart(pizzasCart);
+  const isThisItemExistent = verifyIfCurrentPizzaExistsInCart(pizzasCart);
   const newPizzasCart = createOrModifyPizzaItem(pizzasCart, isThisItemExistent);
   setCartItemsOnLocalStorage(newPizzasCart);
-
-  closeModal();
+  closePizzaModal();
   openCart();
 }
 
 function updateModalPizzaPrice() {
   const modalPizzaPrice = document.querySelector('.modal-pizza-price');
   const { pizzaPrice, pizzaQuantity } = currentPizza;
-  const result = pizzaPrice * pizzaQuantity;
-  modalPizzaPrice.textContent = likeCurrency.format(result);
+  modalPizzaPrice.textContent = likeCurrency.format(pizzaPrice * pizzaQuantity);
 }
 
-async function changeSizeOption() {
-  const { pizzaId, pizzaSizeId } = currentPizza;
-
-  const { sizes } = await getPizzaById(pizzaId);
-  const { price } = sizes[pizzaSizeId];
-  currentPizza.pizzaPrice = price;
-
-  updateModalPizzaPrice();
+async function changePriceBasedOnSizeOptionId() {
+  try {
+    const { pizzaId, pizzaSizeId } = currentPizza;
+    const { sizes } = await getPizzaById(pizzaId);
+    const { price } = sizes[pizzaSizeId];
+    currentPizza.pizzaPrice = price;
+    updateModalPizzaPrice();
+  } catch (error) {
+    if (error) throw new Error(error);
+    console.error(error);
+  }
 }
 
-function subtractQuantity() {
+function subtractModalQuantity() {
   const quantityContainer = document.querySelector('.modal-quantity');
   currentPizza.pizzaQuantity -= 1;
   if (currentPizza.pizzaQuantity < 1) currentPizza.pizzaQuantity = 1;
   quantityContainer.textContent = currentPizza.pizzaQuantity;
-
   updateModalPizzaPrice();
 }
 
-function addQuantity() {
+function addModalQuantity() {
   const quantityContainer = document.querySelector('.modal-quantity');
   currentPizza.pizzaQuantity += 1;
   quantityContainer.textContent = currentPizza.pizzaQuantity;
-
   updateModalPizzaPrice();
 }
 
-function removeActiveClassInSizesOnModal() {
-  const modalPizzaSize = [...document.querySelectorAll('.modal-pizza-size')];
+function removeActiveClassInSizeOptionsOnModal() {
+  const modalPizzaSize = document.querySelectorAll('.modal-pizza-size');
   modalPizzaSize.forEach((btnSize) => btnSize.classList.remove('active'));
 }
 
+function changeCurrentPizzaSize(e) {
+  removeActiveClassInSizeOptionsOnModal();
+
+  const btnCurrentSize = e.currentTarget;
+  const { dataset: { sizeId } } = btnCurrentSize;
+  btnCurrentSize.classList.add('active');
+  currentPizza.pizzaSizeId = sizeId;
+
+  changePriceBasedOnSizeOptionId();
+}
+
 function addClickEventForEachSize(size) {
-  size.addEventListener('click', (e) => {
-    removeActiveClassInSizesOnModal();
-
-    const btnCurrentSize = e.currentTarget;
-    const { dataset: { sizeId } } = btnCurrentSize;
-    btnCurrentSize.classList.add('active');
-
-    currentPizza.pizzaSizeId = sizeId;
-    changeSizeOption();
-  });
+  if (size.classList.contains('active')) changePriceBasedOnSizeOptionId();
+  size.addEventListener('click', changeCurrentPizzaSize);
 }
 
 function addModalEvents() {
-  const modalPizzaSize = [...document.querySelectorAll('.modal-pizza-size')];
+  const modalPizzaSize = document.querySelectorAll('.modal-pizza-size');
   modalPizzaSize.forEach(addClickEventForEachSize);
-  changeSizeOption();
 }
 
 function createPizzaSizesTemplate() {
@@ -325,57 +316,60 @@ function createPizzaSizesTemplate() {
 }
 
 function createModalTemplate() {
-  const pizzaSizesHTML = createPizzaSizesTemplate();
-
   const {
     name, img, description, sizes,
   } = currentPizza.pizza;
-
+  const pizzaSizesHTML = createPizzaSizesTemplate();
   const lastPizzaSizePrice = likeCurrency.format(sizes[sizes.length - 1].price);
 
   return `
     <div class="modal-container active">
-        <div class="modal">
-          <span class="btn-close-modal" onclick="closeModal()"><i class="fas fa-arrow-left"></i> Voltar</span>
-          <div class="modal-image-container">
-            <img src="${img}" alt="${name}" class="modal-pizza-image">
+      <div class="modal">
+        <span class="btn-close-modal" onclick="closePizzaModal()"><i class="fas fa-arrow-left"></i> Voltar</span>
+        <div class="modal-image-container">
+          <img src="${img}" alt="${name}" class="modal-pizza-image">
+        </div>
+        <div class="modal-datas-container">
+          <h1 class="modal-pizza-name">${name}</h1>
+          <h2 class="modal-pizza-description">${description}</h2>
+          <h3 class="modal-subtitle">Tamanho</h3>
+          <div class="modal-size-container">
+            ${pizzaSizesHTML}
           </div>
-          <div class="modal-datas-container">
-            <h1 class="modal-pizza-name">${name}</h1>
-            <h2 class="modal-pizza-description">${description}</h2>
-            <h3 class="modal-subtitle">Tamanho</h3>
-            <div class="modal-size-container">
-              ${pizzaSizesHTML}
+          <h3 class="modal-subtitle">Preço</h3>
+          <div class="modal-price-quantity-container">
+            <h4 class="modal-pizza-price">${lastPizzaSizePrice}</h4>
+            <div class="modal-quantity-container">
+              <button class="modal-btn-minus" onclick="subtractModalQuantity()"><i class="fas fa-minus"></i></button>
+              <span class="modal-quantity">1</span>
+              <button class="modal-btn-plus" onclick="addModalQuantity()"><i class="fas fa-plus"></i></button>
             </div>
-            <h3 class="modal-subtitle">Preço</h3>
-            <div class="modal-price-quantity-container">
-              <h4 class="modal-pizza-price">${lastPizzaSizePrice}</h4>
-              <div class="modal-quantity-container">
-                <button class="modal-btn-minus" onclick="subtractQuantity()"><i class="fas fa-minus"></i></button>
-                <span class="modal-quantity">1</span>
-                <button class="modal-btn-plus" onclick="addQuantity()"><i class="fas fa-plus"></i></button>
-              </div>
-            </div>
-            <div class="modal-buttons-container">
-              <button class="modal-btn-add-to-cart" onclick="addToCart()">Adicionar ao carrinho</button>
-              <button class="modal-btn-cancel" onclick="closeModal()">Cancelar</button>
-            </div>
+          </div>
+          <div class="modal-buttons-container">
+            <button class="modal-btn-add-to-cart" onclick="addToCart()">Adicionar ao carrinho</button>
+            <button class="modal-btn-cancel" onclick="closePizzaModal()">Cancelar</button>
           </div>
         </div>
       </div>
+    </div>
   `;
 }
 
 async function openPizzaModal(element) {
-  resetPizzaStates();
-  currentPizza.pizzaId = element.parentNode.dataset.id;
-  currentPizza.pizza = await getPizzaById();
+  try {
+    resetPizzaStates();
+    currentPizza.pizzaId = element.parentNode.dataset.id;
+    currentPizza.pizza = await getPizzaById();
 
-  const modal = createModalTemplate();
-  pagePizzas.innerHTML += modal;
+    const modal = createModalTemplate();
+    pagePizzas.innerHTML += modal;
 
-  addNoScrollBodyClass();
-  addModalEvents();
+    addNoScrollBodyClass();
+    addModalEvents();
+  } catch (error) {
+    if (error) throw new Error(error);
+    console.error(error);
+  }
 }
 
 function createPizzasTemplate(acc, {
@@ -387,7 +381,7 @@ function createPizzasTemplate(acc, {
         <img src="${img}" alt="${name}" class="pizza-image">
       </div>
       <button class="btn-add-pizza" onclick="openPizzaModal(this)"><i class="fas fa-plus"></i></button>
-      <h3 class="pizza-price">${likeCurrency.format(sizes[2].price)}</h3>
+      <h3 class="pizza-price">${likeCurrency.format(sizes[sizes.length - 1].price)}</h3>
       <h2 class="pizza-name">${name}</h2>
       <p class="pizza-description">${description}</p>
     </div>
@@ -395,32 +389,36 @@ function createPizzasTemplate(acc, {
   return acc;
 }
 
+function verifyIfExistsPizzasInCart() {
+  const pizzasCart = JSON.parse(localStorage.getItem('cart'));
+  if (pizzasCart) openCart();
+}
+
 async function insertPizzasIntoDOM() {
   try {
     const pizzas = await getPizzas();
     const pizzasTemplate = pizzas.reduce(createPizzasTemplate, '');
     pizzasContainer.innerHTML = pizzasTemplate;
+    verifyIfExistsPizzasInCart();
   } catch (error) {
     if (error) throw new Error(error);
+    console.error(error);
   }
 }
 
-function verifyIfExistsItemsInCart() {
-  const pizzasCart = JSON.parse(localStorage.getItem('cart'));
-  if (pizzasCart) openCart();
-  addEventsToQuantityInCartItems();
-}
-
-insertPizzasIntoDOM();
-verifyIfExistsItemsInCart();
-
-window.addEventListener('resize', () => {
+function whenResizeTheWindow() {
   const cartContainer = document.querySelector('.cart-container');
 
   if (window.innerWidth > 768) {
-    verifyIfExistsItemsInCart();
+    verifyIfExistsPizzasInCart();
+    removeNoScrollBodyClass();
   } else if (window.innerWidth <= 768
-      && cartContainer.classList.contains('active')) {
+    && cartContainer.classList.contains('active')) {
     openCart();
+    addNoScrollBodyClass();
   }
-});
+}
+
+insertPizzasIntoDOM();
+
+window.addEventListener('resize', whenResizeTheWindow);
