@@ -26,9 +26,9 @@ See live on [Pizza Store 🔥](https://joaogabriel-sg.github.io/pizza-store/)
 
 1. Move yourself to the appropriate repository `cd pizza-store`
 
-1. Run `npm i` to install the packages dependencies
+1. Run `npm i` on terminal to install the packages dependencies
 
-1. If you want to modify any file, run `gulp watch`
+1. Run `gulp watch` on terminal to run the application
 
 ## 📃 License
 
