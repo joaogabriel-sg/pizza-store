@@ -78,12 +78,11 @@ body {
     background: #c0392b;
     width: 4rem;
     height: 4rem;
-    border: none;
     @include border-radius(50%);
     @include flex-xcenter-ycenter;
+    @include btn-configs;
     color: #edf2f4;
     transform: translateY(-50%);
-    cursor: pointer;
     transition: background 0.3s;
     &:hover {
       background: #e74c3c;

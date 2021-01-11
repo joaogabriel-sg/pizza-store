@@ -11,6 +11,9 @@
   display: none;
   &.active  {
     display: flex;
+    .modal {
+      animation: animate-show-modal 1s ease forwards;
+    }
   }
   @include device(tablet) {
     padding: 0;
@@ -22,8 +25,10 @@
   width: 100%;
   max-width: 75rem;
   padding: 3.2rem;
-  @include border-radius(1rem);
   display: flex;
+  opacity: 0;
+  transform: translateY(-2rem);
+  @include border-radius(1rem);
   @include box-shadow(0 1rem 3rem rgba(0, 0, 0, 0.2));
   @include device(tablet) {
     height: 100%;
@@ -102,11 +107,10 @@
   .modal-pizza-size {
     background: #e4e4e4;
     padding: 0.7rem 1.4rem;
-    border: none;
     text-transform: uppercase;
     font-size: 1.2rem;
     font-weight: 700;
-    cursor: pointer;
+    @include btn-configs;
     transition: background 0.3s, color 0.3s;
     color: #121212;
     &.active {
@@ -117,7 +121,7 @@
         color: #e2e2e2;
       }
     }
-    &:hover {
+    &:hover:not(.active) {
       background: #bdc3c7;
     }
     &:nth-child(1) {

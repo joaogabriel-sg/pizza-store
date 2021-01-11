@@ -2,11 +2,11 @@
   {
     "id": 1,
     "name": "Mussarela",
-    "img": "public/images/pizza.png",
+    "img": "public/images/pizza1.png",
     "sizes": [
-      { "size": "100g", "price": 20.00 },
-      { "size": "530g", "price": 25.00 },
-      { "size": "860g", "price": 30.00 }
+      { "size": "100g", "desc": "Pequena", "price": 20.00 },
+      { "size": "530g", "desc": "Média", "price": 25.00 },
+      { "size": "860g", "desc": "Grande", "price": 30.00 }
     ],
     "description": "A melhor pizza de Mussarela da região"
   },
@@ -15,9 +15,9 @@
     "name": "Calabresa",
     "img": "public/images/pizza2.png",
     "sizes": [
-      { "size": "100g", "price": 25.00 },
-      { "size": "530g", "price": 28.00 },
-      { "size": "860g", "price": 31.00 }
+      { "size": "100g", "desc": "Pequena", "price": 25.00 },
+      { "size": "530g", "desc": "Média", "price": 28.00 },
+      { "size": "860g", "desc": "Grande", "price": 31.00 }
     ],
     "description": "A melhor pizza de Calabresa da região"
   },
@@ -26,9 +26,9 @@
     "name": "Quatro Queijos",
     "img": "public/images/pizza3.png",
     "sizes": [
-      { "size": "100g", "price": 30.00 },
-      { "size": "530g", "price": 35.00 },
-      { "size": "860g", "price": 40.00 }
+      { "size": "100g", "desc": "Pequena", "price": 30.00 },
+      { "size": "530g", "desc": "Média", "price": 35.00 },
+      { "size": "860g", "desc": "Grande", "price": 40.00 }
     ],
     "description": "A melhor pizza de Quatro Queijos da região"
   },
@@ -37,9 +37,9 @@
     "name": "Americana",
     "img": "public/images/pizza4.png",
     "sizes": [
-      { "size": "100g", "price": 23.00 },
-      { "size": "530g", "price": 26.00 },
-      { "size": "860g", "price": 29.00 }
+      { "size": "100g", "desc": "Pequena", "price": 23.00 },
+      { "size": "530g", "desc": "Média", "price": 26.00 },
+      { "size": "860g", "desc": "Grande", "price": 29.00 }
     ],
     "description": "A melhor pizza de Americana da região"
   },
@@ -48,9 +48,9 @@
     "name": "Sorvete",
     "img": "public/images/pizza5.png",
     "sizes": [
-      { "size": "100g", "price": 30.50 },
-      { "size": "530g", "price": 35.50 },
-      { "size": "860g", "price": 40.50 }
+      { "size": "100g", "desc": "Pequena", "price": 30.50 },
+      { "size": "530g", "desc": "Média", "price": 35.50 },
+      { "size": "860g", "desc": "Grande", "price": 40.50 }
     ],
     "description": "A melhor pizza de Sorvete da região"
   },
@@ -59,9 +59,9 @@
     "name": "Moda da Casa",
     "img": "public/images/pizza6.png",
     "sizes": [
-      { "size": "100g", "price": 35.00 },
-      { "size": "530g", "price": 40.00 },
-      { "size": "860g", "price": 45.00 }
+      { "size": "100g", "desc": "Pequena", "price": 35.00 },
+      { "size": "530g", "desc": "Média", "price": 40.00 },
+      { "size": "860g", "desc": "Grande", "price": 45.00 }
     ],
     "description": "A melhor pizza de Moda da Casa da região"
   },
@@ -70,9 +70,9 @@
     "name": "Chocolate",
     "img": "public/images/pizza7.png",
     "sizes": [
-      { "size": "100g", "price": 20.00 },
-      { "size": "530g", "price": 23.00 },
-      { "size": "860g", "price": 25.00 }
+      { "size": "100g", "desc": "Pequena", "price": 20.00 },
+      { "size": "530g", "desc": "Média", "price": 23.00 },
+      { "size": "860g", "desc": "Grande", "price": 25.00 }
     ],
     "description": "A melhor pizza de Chocolate da região"
   }
