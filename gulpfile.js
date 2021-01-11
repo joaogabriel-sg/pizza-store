@@ -5,9 +5,6 @@ const browserSync = require('browser-sync').create();
 
 sass.compiler = require('node-sass');
 
-gulp.task('sass', compileSass);
-gulp.task('watch', watch);
-
 function compileSass() {
   return gulp
     .src('./public/scss/style.scss')
@@ -20,10 +17,13 @@ function compileSass() {
 function watch() {
   browserSync.init({
     server: {
-      baseDir: './'
-    }
+      baseDir: './',
+    },
   });
   gulp.watch('./public/scss/**/*.scss', compileSass);
   gulp.watch('./*.html').on('change', browserSync.reload);
   gulp.watch('./public/scripts/**/*.js').on('change', browserSync.reload);
 }
+
+gulp.task('sass', compileSass);
+gulp.task('watch', watch);

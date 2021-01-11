@@ -407,7 +407,6 @@ async function insertPizzasIntoDOM() {
 
 function verifyIfExistsItemsInCart() {
   const pizzasCart = JSON.parse(localStorage.getItem('cart'));
-  console.log(pizzasCart);
   if (pizzasCart) openCart();
   addEventsToQuantityInCartItems();
 }
@@ -416,5 +415,12 @@ insertPizzasIntoDOM();
 verifyIfExistsItemsInCart();
 
 window.addEventListener('resize', () => {
-  if (window.innerWidth > 768) verifyIfExistsItemsInCart();
+  const cartContainer = document.querySelector('.cart-container');
+
+  if (window.innerWidth > 768) {
+    verifyIfExistsItemsInCart();
+  } else if (window.innerWidth <= 768
+      && cartContainer.classList.contains('active')) {
+    openCart();
+  }
 });
